@@ -1,11 +1,11 @@
-import React, { createContext, useState } from 'react'
-import NavBar from './components/Navbar'
+import React, { useState } from 'react'
+import Header from './components/Header';
 
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
+      <Header />
     </div>
   );
 }
