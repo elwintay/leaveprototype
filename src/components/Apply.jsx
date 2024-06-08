@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import NavBar from './components/Navbar';
 
 
-function App() {
+function Apply() {
   return (
     <>
       <div className="bg-slate-900">
@@ -12,4 +12,4 @@ function App() {
   );
 }
 
-export default App;
+export default Apply;
