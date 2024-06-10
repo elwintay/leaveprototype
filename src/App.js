@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import NavBar from './components/Navbar';
+import NavBar from './components/Navbar'
+import Apply from './components/Apply'
 
 
 function App() {
   return (
     <>
-      <div className="bg-slate-900">
+      <div className="">
         <NavBar />
+        <Apply />
       </div>
     </>
   );

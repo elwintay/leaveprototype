@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import NavBar from './components/Navbar';
+import ApplyForm from './ApplyForm';
 
 
 function Apply() {
   return (
     <>
-      <div className="bg-slate-900">
-        <NavBar />
+      <div className='flex flex-row justify-center'>
+        <ApplyForm />
       </div>
     </>
   );
