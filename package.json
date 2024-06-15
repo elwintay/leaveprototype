@@ -14,6 +14,7 @@
     "react-icons": "^5.2.1",
     "react-scripts": "5.0.1",
     "react-scroll": "^1.9.0",
+    "react-table": "^7.8.0",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -42,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "json-loader": "^0.5.7",
     "tailwindcss": "^3.4.3"
   }
 }

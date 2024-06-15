@@ -1,0 +1,8 @@
+[
+    {"id": "1", "name": "eric", "team": "Team A", "type": "Vacation", "date":"15/06/2024", "shift":"Day"},
+    {"id": "2", "name": "eric", "team": "Team A", "type":"Vacation", "date":"16/06/2024", "shift":"Day"},
+    {"id": "3", "name": "eric", "team": "Team A", "type":"Vacation", "date":"17/06/2024", "shift":"Day"},
+    {"id": "4", "name": "eric", "team": "Team A", "type":"Vacation", "date":"18/06/2024", "shift":"Day"},
+    {"id": "5", "name": "cheryl", "team":"Team B", "type":"Vacation", "date":"11/06/2024", "shift":"Day"}
+]
+

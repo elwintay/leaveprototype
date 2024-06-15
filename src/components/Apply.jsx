@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import ApplyForm from './ApplyForm';
 
 
-function Apply() {
+
+function Apply(props) {
   return (
     <>
       <div className='flex flex-row justify-center'>
-        <ApplyForm />
+        <ApplyForm user={props.user}/>
       </div>
     </>
   );
