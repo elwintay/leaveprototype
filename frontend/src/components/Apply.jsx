@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ApplyForm from './ApplyForm';
+import NavBar from './Navbar'
 
 
 

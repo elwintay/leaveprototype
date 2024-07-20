@@ -1,19 +1,43 @@
 import React, { useState } from 'react'
 import NavBar from './components/Navbar'
 import Apply from './components/Apply'
+import Login from './components/Login'
+import Home from './components/Home'
+import { createHashRouter, Link, RouterProvider } from 'react-router-dom'
+import Logout from './components/Logout'
 
 
-function App() {
-  const user = "Test"
+const router = createHashRouter([
+  {
+      path: '/',
+      element: <Home />,
+      children: [
+          {
+              path: 'signup',
+              element: (
+                  <div></div>
+              ),
+          },
+          {
+            path: 'login',
+            element: <Login />,
+          },
+          {
+            path: 'logout',
+            element: <Logout />,
+          },
+          {
+              path: 'apply',
+              element: <Apply />,
+          },
+      ],
+  },
+]);
+
+export default function App(props) {
   return (
-    <>
       <div>
-        <NavBar />
-        {/* <h2 className='text-xl font-bold lg:py-5 px-20 py-4'>Welcome {user}</h2> */}
-        <Apply user={user}/>
+          <RouterProvider router={router} />
       </div>
-    </>
   );
 }
-
-export default App;

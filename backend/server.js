@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const leaveRoutes = require('./routes/leaves')
 // const blockRoutes = require('./routes/blocks')
 const userRoutes = require('./routes/users')
@@ -9,7 +10,8 @@ const cookieParser = require('cookie-parser');
 
 //create express app
 const app = express()
-
+// app.options('*', cors());
+app.use(cors({origin: true, methods: ["GET", "POST", "DELETE"], credentials: true}))
 app.use(express.json())
 app.use((req, res, next) => {
     console.log(req.path, req.method)
