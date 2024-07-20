@@ -2,15 +2,30 @@ import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 import {FaTimes} from 'react-icons/fa'
 import {CiMenuFries} from 'react-icons/ci'
+import { useNavigate } from "react-router-dom";
 
 const NavBar = (props) => {
     const [nav, setNav] = useState(false)
+    const navigate = useNavigate();
+    const clearCookie = () => {
+        const requestOptions = {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+          credentials: 'include'
+        };
+        fetch('http://localhost:4000/api/user/logout', requestOptions)
+            .then(res => {
+                console.log(res)
+                navigate("/login")
+            })
+    };
     const loggedOut = <div className="md:flex lg:flex-1 items-center justify-end font-normal hidden">
                         <ul className="flex gap-8 mr-16 text-[18px]">
                             <Link spy={true} smooth={true} to="/login">
                                 <li className='px-5 py-1 hover:text-blue-400 transition border-b-2 border-slate-900 cursor-pointer'>Login</li>
                             </Link>
-                            <Link spy={true} smooth={true} to="/logout">
+                            <Link spy={true} smooth={true} onClick={clearCookie}>
                                 <li className='px-5 py-1 hover:text-blue-400 transition border-b-2 border-slate-900 cursor-pointer'>Logout</li>
                             </Link>
                             <Link spy={true} smooth={true} to="/signup">
@@ -20,7 +35,7 @@ const NavBar = (props) => {
                     </div>
     const loggedIn = <div className="md:flex lg:flex-1 items-center justify-end font-normal hidden">
                         <ul className="flex gap-8 mr-16 text-[18px]">
-                            <Link spy={true} smooth={true} to="/logout">
+                            <Link spy={true} smooth={true} onClick={clearCookie}>
                                 <li className='px-5 py-1 hover:text-blue-400 transition border-b-2 border-slate-900 cursor-pointer'>Login</li>
                             </Link>
                         </ul>
@@ -31,7 +46,7 @@ const NavBar = (props) => {
                                     <Link spy={true} smooth={true} to="/login">
                                         <li className='my-2 py-2 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Login</li>
                                     </Link>
-                                    <Link spy={true} smooth={true} to="/logout">
+                                    <Link spy={true} smooth={true} onClick={clearCookie}>
                                         <li className='my-2 py-2 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Logout</li>
                                     </Link>
                                     <Link spy={true} smooth={true} to="/signup">
@@ -43,7 +58,7 @@ const NavBar = (props) => {
     const loggedInFlex = <div>
                             <div className='lg:hidden block absolute top-12 w-full left-0 right-0 bg-slate-900 transition'>
                                 <ul className="text-center text-xl p-10">
-                                    <Link spy={true} smooth={true} to="/logout">
+                                    <Link spy={true} smooth={true} onClick={clearCookie}>
                                         <li className='my-2 py-2 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Logout</li>
                                     </Link>
                                 </ul>

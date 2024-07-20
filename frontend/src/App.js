@@ -23,10 +23,6 @@ const router = createHashRouter([
             element: <Login />,
           },
           {
-            path: 'logout',
-            element: <Logout />,
-          },
-          {
               path: 'apply',
               element: <Apply />,
           },
