@@ -18,6 +18,7 @@ const NavBar = (props) => {
             .then(res => {
                 console.log(res)
                 navigate("/login")
+                navigate(0)
             })
     };
     const loggedOut = <div className="md:flex lg:flex-1 items-center justify-end font-normal hidden">

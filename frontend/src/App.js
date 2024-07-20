@@ -4,7 +4,6 @@ import Apply from './components/Apply'
 import Login from './components/Login'
 import Home from './components/Home'
 import { createHashRouter, Link, RouterProvider } from 'react-router-dom'
-import Logout from './components/Logout'
 
 
 const router = createHashRouter([
