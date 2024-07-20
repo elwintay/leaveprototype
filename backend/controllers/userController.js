@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 const userModel = require('../models/userModel')
+const authMiddleware = require('../middleware/authMiddleware')
 const mongoose = require('mongoose')
 require("dotenv").config()
 
@@ -33,28 +34,15 @@ const handleErrors = (err) => {
     return errors;
 }
 
-const createToken = (id) => {
-    const callback = (err, token) => {
-        if (err) {
-            console.error("Error jwt:", err);
-        }
-    }
-    const options = {
-        algorithm: process.env.JWT_ALGORITHM,
-        expiresIn: process.env.JWT_EXPIRES_IN,
-    }
-    return jwt.sign({ id }, process.env.JWT_SECRET_KEY, options, callback)
-};
-
 const signup_post = async (req, res, next) => {
-    const { email, password } = req.body;
+    const { email, username, password, team } = req.body;
 
     try {
-        const user = await userModel.create({ email, password });
-        const token = createToken(user._id);
-        console.log(token)
+        const user = await userModel.create({ email, username, password, team });
+        const tokenInput = {userid: user.id.toString(), username: user.username}
+        const token = authMiddleware.createToken(tokenInput);
         res.cookie('jwt', token, { httpOnly: true, maxAge: process.env.COOKIE_MAX_AGE });
-        res.status(201).json({ user: user._id });
+        res.status(201).json({ user: tokenInput });
     }
     catch (err) {
         const errors = handleErrors(err);
@@ -63,23 +51,29 @@ const signup_post = async (req, res, next) => {
 
 }
 
-const
-    login_post = async (req, res) => {
-        const { email, password } = req.body;
+const login_post = async (req, res) => {
+    const { email, password } = req.body;
 
-        try {
-            const user = await userModel.login(email, password);
-            const token = createToken(user._id);
-            res.cookie('jwt', token, { httpOnly: true, maxAge: process.env.COOKIE_MAX_AGE });
-            res.status(200).json({ user: user._id });
-        } catch (err) {
-            const errors = handleErrors(err);
-            res.status(400).json({});
-        }
-
+    try {
+        const user = await userModel.login(email, password);
+        const tokenInput = {userid: user.id.toString(), username: user.username}
+        const token = authMiddleware.createToken(tokenInput);
+        res.cookie('jwt', token, { httpOnly: true, maxAge: process.env.COOKIE_MAX_AGE });
+        res.status(200).json({ user: tokenInput });
+    } catch (err) {
+        const errors = handleErrors(err);
+        res.status(400).json({});
     }
+
+}
+
+const logout_get = (req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.status(200).json({ message: "Logged out successfully" });
+}
 
 module.exports = {
     signup_post,
-    login_post
+    login_post,
+    logout_get
 }

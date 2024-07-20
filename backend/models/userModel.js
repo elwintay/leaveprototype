@@ -10,10 +10,19 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [isEmail, 'Please enter a valid email']
   },
+  username: {
+    type: String,
+    required: [true, 'Please enter a username'],
+    unique: true
+  },
   password: {
     type: String,
     required: [true, 'Please enter a password'],
     minlength: [6, 'Minimum password length is 6 characters'],
+  },
+  team: {
+    type: String,
+    required: [true, 'Please enter a password'],
   }
 });
 

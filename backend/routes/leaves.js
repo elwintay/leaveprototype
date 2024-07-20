@@ -5,11 +5,12 @@ const {createLeave,
     deleteLeave, 
     updateLeave, 
     getUserLeave} = require('../controllers/leaveController')
+const { requireAuth } = require('../middleware/authMiddleware');
 
 const router = express.Router()
 
 //GET all leaves
-router.get('/', getLeaves)
+router.get('/', requireAuth, getLeaves)
 
 //GET a single leave
 router.get("/:id", getSingleLeave)
