@@ -4,12 +4,12 @@ import Apply from './components/Apply'
 
 
 function App() {
-  const user = "eric"
+  const user = "Test"
   return (
     <>
-      <div className="">
+      <div>
         <NavBar />
-        <h2>Welcome {user}</h2>
+        {/* <h2 className='text-xl font-bold lg:py-5 px-20 py-4'>Welcome {user}</h2> */}
         <Apply user={user}/>
       </div>
     </>
