@@ -10,21 +10,21 @@ const { requireAuth } = require('../middleware/authMiddleware');
 const router = express.Router()
 
 //GET all leaves
-router.get('/', requireAuth, getLeaves)
+router.get('/', getLeaves)
 
 //GET a single leave
 router.get("/:id", getSingleLeave)
 
 //GET user leave
-router.get("/user/:user", getUserLeave)
+router.get("/user/:user", requireAuth, getUserLeave)
 
 //POST a new leave
-router.post('/', createLeave)
+router.post('/', requireAuth, createLeave)
 
 //DELETE a new leave
-router.delete('/:id', deleteLeave)
+router.delete('/:id', requireAuth, deleteLeave)
 
 //UPDATE a new leave
-router.patch('/:id', updateLeave)
+router.patch('/:id', requireAuth, updateLeave)
 
 module.exports = router

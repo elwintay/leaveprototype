@@ -1,27 +1,43 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm, Controller } from "react-hook-form"
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
 import { format } from 'date-fns'
 import LeaveTable from './LeaveTable';
 import { v4 as uuidv4 } from 'uuid';
+import { useDispatch } from 'react-redux'
+import { add } from './redux/leaveSlice';
+import Cookies from 'js-cookie'
 
 
-function ApplyForm(props) {
+function ApplyForm() {
 
-  let [newData, setNewData] = React.useState()
+  const dispatch = useDispatch();
 
   const { register, handleSubmit, control, setValue } = useForm({});
   const onSubmitData = (data) => {
-    data["id"] = uuidv4()
-    data['name'] = props.user
+    console.log(data)
+    data['user'] = Cookies.get('username')
     data['date'] = format(data['date'], 'dd/MM/yyyy').toString()
-    setNewData(data)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+      credentials: 'include',
+      body: JSON.stringify(data),
+    };
+    fetch(`http://localhost:4000/api/leave`, requestOptions)
+        .then(res => {if (res.status==200){
+          dispatch(add(data))
+        }}).catch(err => {
+          console.log(err)
+        })
   };
   const publicHolidays  = ["New Year Day - 2024", "Christmas Day - 2023"]
   const [date, setDate] = React.useState(new Date(Date.now()));
   const handleChange = (dateChange) => {
-    setValue("leaveDate", dateChange, {
+    console.log(dateChange)
+    setValue("date", dateChange, {
       shouldDirty: true
     });
     setDate(dateChange);
@@ -47,7 +63,7 @@ function ApplyForm(props) {
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-type">
               Leave Type
             </label>
-            <select class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-type" {...register('type')}>
+            <select class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-type" {...register('leaveType')}>
               <option selected>Vacation</option>
               <option>Medical</option>
               {publicHolidays.map((x,y) => <option key={y}>{x}</option>)}
@@ -83,7 +99,7 @@ function ApplyForm(props) {
         </div>
         <input className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="Apply"/>
       </form>
-      <LeaveTable newData={newData} setNewData={setNewData}/>
+      <LeaveTable />
     </div>
   );
 }

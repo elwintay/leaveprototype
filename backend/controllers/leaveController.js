@@ -46,8 +46,8 @@ const createLeave = async(req, res) => {
     try {
         const leave = await leaveModel.create({user, team, leaveType, shift, date})
         res.status(200).json(leave)
-    } catch (error) {
-        res.status(400).json({error: error.message})
+    } catch (err) {
+        res.status(400).json({error: err.message})
     }
 }
 

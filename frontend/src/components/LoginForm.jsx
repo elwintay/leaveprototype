@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useForm, Controller } from "react-hook-form"
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { add } from './redux/userSlice';
+import Cookies from 'js-cookie'
 
 function LoginForm(props) {
-
-  let [loginCreds, setLoginCreds] = React.useState()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { register, handleSubmit, control, setValue } = useForm({});
   const onSubmitData = (loginCredentials) => {
@@ -17,6 +19,7 @@ function LoginForm(props) {
     };
     fetch('http://localhost:4000/api/user/login', requestOptions)
         .then(res => {if (res.status==200){
+          dispatch(add(Cookies.get('username')))
           navigate("/apply")
         }})
   };

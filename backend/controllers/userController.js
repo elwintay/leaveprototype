@@ -59,6 +59,7 @@ const login_post = async (req, res) => {
         const tokenInput = {userid: user.id.toString(), username: user.username}
         const token = authMiddleware.createToken(tokenInput);
         res.cookie('jwt', token, { httpOnly: true, maxAge: process.env.COOKIE_MAX_AGE });
+        res.cookie('username', user.username)
         res.status(200).json({ user: tokenInput });
     } catch (err) {
         const errors = handleErrors(err);
@@ -69,6 +70,7 @@ const login_post = async (req, res) => {
 
 const logout_get = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });
+    res.cookie('username', '', { maxAge: 1 });
     res.status(200).json({ message: "Logged out successfully" });
 }
 

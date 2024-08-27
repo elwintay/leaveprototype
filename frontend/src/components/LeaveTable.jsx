@@ -1,33 +1,47 @@
-import React, { useState } from 'react'
-import { useGlobalFilter, useTable } from "react-table"
-import fakeData from "../fakeData.json"
+import React , {useEffect} from 'react'
+import { useTable } from "react-table"
 import { MdDeleteForever } from "react-icons/md";
+import { useSelector, useDispatch } from 'react-redux'
+import { remove, update } from './redux/leaveSlice';
+import Cookies from 'js-cookie'
 
 
-function LeaveTable(props){ 
+function LeaveTable(){ 
 
-    const [dataOrig, setDataOrig] = React.useState(fakeData)
-    if (props.newData && !dataOrig.includes(props.newData)){
-        setDataOrig([...dataOrig, props.newData])
-        props.setNewData()
-    }
+    const dispatch = useDispatch();
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+        credentials: 'include'
+    };
+    useEffect(()=>{
+        fetch(`http://localhost:4000/api/leave/user/${Cookies.get("username")}`, requestOptions)
+            .then(res => res.json())
+            .then(leaves => {
+                dispatch(update(leaves))
+            })
+            .catch(err => {
+                console.log(err)
+        })
+    }, [])
 
-    const handleDeleteClick = (leaveId) => {
-        console.log(leaveId)
-        console.log(dataOrig)
-        const newLeaves = dataOrig.filter((leave) => leave.id !== leaveId)
-        setDataOrig(newLeaves)
-    }
+    const leaves = useSelector(function(store) {
+        return store.leave.value;
+    });
+
+    console.log(leaves)
+
     
-    const data = React.useMemo(() => dataOrig, [dataOrig])
+    const data = React.useMemo(() => leaves, [leaves])
     const columns = React.useMemo(() => [
         {
             Header: "Id",
-            accessor: "id",
+            accessor: "_id",
         },
         {
             Header: "Name",
-            accessor: "name",
+            accessor: "user",
         },
         {
             Header: "Team",
@@ -35,7 +49,7 @@ function LeaveTable(props){
         },
         {
             Header: "Leave Type",
-            accessor: "type",
+            accessor: "leaveType",
         },
         {
             Header: "Leave Date",
@@ -47,7 +61,7 @@ function LeaveTable(props){
         },
     ], [])
 
-    const initialState = {hiddenColumns: ["id"]}
+    const initialState = {hiddenColumns: ["_id"]}
 
     const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} = useTable({ columns, data, initialState })
 
@@ -73,7 +87,7 @@ function LeaveTable(props){
                                 {row.cells.map((cell) => (
                                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                                 ))}
-                                <button type="button" onClick={() => handleDeleteClick(row.original.id)}><MdDeleteForever /></button>
+                                <button type="button" onClick={() => dispatch(remove(row.original._id))}><MdDeleteForever /></button>
                             </tr>
                         )
                     })}
