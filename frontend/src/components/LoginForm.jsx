@@ -3,6 +3,7 @@ import { useForm, Controller } from "react-hook-form"
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { add } from './redux/userSlice';
+import { login } from './redux/loginSlice';
 import Cookies from 'js-cookie'
 
 function LoginForm(props) {
@@ -20,6 +21,7 @@ function LoginForm(props) {
     fetch('http://localhost:4000/api/user/login', requestOptions)
         .then(res => {if (res.status==200){
           dispatch(add(Cookies.get('username')))
+          dispatch(login())
           navigate("/apply")
         }})
   };

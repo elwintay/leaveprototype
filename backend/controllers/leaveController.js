@@ -42,9 +42,9 @@ const getUserLeave = async (req, res) => {
 
 //create new leave
 const createLeave = async(req, res) => {
-    const {user, team, leaveType, shift, date} = req.body
+    const {id, user, team, leaveType, shift, date} = req.body
     try {
-        const leave = await leaveModel.create({user, team, leaveType, shift, date})
+        const leave = await leaveModel.create({id, user, team, leaveType, shift, date})
         res.status(200).json(leave)
     } catch (err) {
         res.status(400).json({error: err.message})
@@ -55,11 +55,7 @@ const createLeave = async(req, res) => {
 const deleteLeave = async (req, res) => {
     const { id } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: 'No such leave'})
-    }
-
-    const leave = await leaveModel.findOneAndDelete({_id: id})
+    const leave = await leaveModel.findOneAndDelete({id: id})
 
     if (!leave) {
         return res.status(404).json({error: "No such leave"})

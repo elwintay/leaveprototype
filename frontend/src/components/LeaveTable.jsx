@@ -37,7 +37,7 @@ function LeaveTable(){
     const columns = React.useMemo(() => [
         {
             Header: "Id",
-            accessor: "_id",
+            accessor: "id",
         },
         {
             Header: "Name",
@@ -61,7 +61,7 @@ function LeaveTable(){
         },
     ], [])
 
-    const initialState = {hiddenColumns: ["_id"]}
+    const initialState = {hiddenColumns: ["id"]}
 
     const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} = useTable({ columns, data, initialState })
 
@@ -87,7 +87,7 @@ function LeaveTable(){
                                 {row.cells.map((cell) => (
                                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                                 ))}
-                                <button type="button" onClick={() => dispatch(remove(row.original._id))}><MdDeleteForever /></button>
+                                <button type="button" onClick={() => dispatch(remove(row.original.id))}><MdDeleteForever /></button>
                             </tr>
                         )
                     })}

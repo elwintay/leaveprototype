@@ -16,7 +16,7 @@ function ApplyForm() {
 
   const { register, handleSubmit, control, setValue } = useForm({});
   const onSubmitData = (data) => {
-    console.log(data)
+    data['id'] = uuidv4()
     data['user'] = Cookies.get('username')
     data['date'] = format(data['date'], 'dd/MM/yyyy').toString()
     const requestOptions = {

@@ -15,17 +15,18 @@ const leaveSlice = createSlice({
                 credentials: 'include'
             };
             fetch(`http://localhost:4000/api/leave/${action.payload}`, requestOptions)
-                .then(res => {if (res.ok) {
+                .then(res => {
+                    console.log(res)
                     if (!res.ok) {
                         throw new Error(`HTTP error! Status: ${res.status}`);
                       }
                     return res.json();
-                }})
+                })
                 .then(data => console.log(data))
                 .catch(err => {
                     console.log(err)
             })
-            state.value = state.value.filter((leave) => leave._id !== action.payload)
+            state.value = state.value.filter((leave) => leave.id !== action.payload)
         },
         add: function (state, action) {
             state.value.push(action.payload)
