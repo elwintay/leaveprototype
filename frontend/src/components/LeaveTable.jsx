@@ -16,7 +16,7 @@ function LeaveTable(){
         credentials: 'include'
     };
     useEffect(()=>{
-        fetch(`http://localhost:4000/api/leave/user/${Cookies.get("username")}`, requestOptions)
+        fetch(`http://leaveprototype-backend.vercel.app/api/leave/user/${Cookies.get("username")}`, requestOptions)
             .then(res => res.json())
             .then(leaves => {
                 dispatch(update(leaves))

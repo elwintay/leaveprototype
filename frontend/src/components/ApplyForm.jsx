@@ -26,7 +26,7 @@ function ApplyForm() {
       credentials: 'include',
       body: JSON.stringify(data),
     };
-    fetch(`http://localhost:4000/api/leave`, requestOptions)
+    fetch(`http://leaveprototype-backend.vercel.app/api/leave`, requestOptions)
         .then(res => {if (res.status==200){
           dispatch(add(data))
         }}).catch(err => {

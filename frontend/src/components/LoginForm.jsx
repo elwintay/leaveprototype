@@ -18,7 +18,7 @@ function LoginForm(props) {
       credentials: 'include',
       body: JSON.stringify(loginCredentials),
     };
-    fetch('http://localhost:4000/api/user/login', requestOptions)
+    fetch('http://leaveprototype-backend.vercel.app/api/user/login', requestOptions)
         .then(res => {if (res.status==200){
           dispatch(add(Cookies.get('username')))
           dispatch(login())

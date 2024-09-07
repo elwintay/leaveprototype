@@ -27,7 +27,7 @@ const NavBar = (props) => {
           withCredentials: true,
           credentials: 'include'
         };
-        fetch('http://localhost:4000/api/user/logout', requestOptions)
+        fetch('http://leaveprototype-backend.vercel.app/api/user/logout', requestOptions)
             .then(res => {
                 console.log(res)
                 navigate("/login")

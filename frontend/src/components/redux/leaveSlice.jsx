@@ -14,7 +14,7 @@ const leaveSlice = createSlice({
                 withCredentials: true,
                 credentials: 'include'
             };
-            fetch(`http://localhost:4000/api/leave/${action.payload}`, requestOptions)
+            fetch(`http://leaveprototype-backend.vercel.app/api/leave/${action.payload}`, requestOptions)
                 .then(res => {
                     console.log(res)
                     if (!res.ok) {
