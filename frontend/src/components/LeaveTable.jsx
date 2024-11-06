@@ -18,7 +18,7 @@ function LeaveTable(){
     useEffect(()=>{
         console.log(Cookies.get("username"))
         console.log(Cookies.get("jwt"))
-        fetch(`https://leaveprototype-backend.vercel.app/api/leave/user/${Cookies.get("username")}`, requestOptions)
+        fetch(`https://leaveease-server.vercel.app/api/leave/user/${Cookies.get("username")}`, requestOptions)
             .then(res => res.json())
             .then(leaves => {
                 dispatch(update(leaves))
