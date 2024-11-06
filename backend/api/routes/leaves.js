@@ -16,15 +16,15 @@ router.get('/', getLeaves)
 router.get("/:id", getSingleLeave)
 
 //GET user leave
-router.get("/user/:user", requireAuth, getUserLeave)
+router.get("/user/:user", getUserLeave)
 
 //POST a new leave
-router.post('/', requireAuth, createLeave)
+router.post('/', createLeave)
 
 //DELETE a new leave
-router.delete('/:id', requireAuth, deleteLeave)
+router.delete('/:id', deleteLeave)
 
 //UPDATE a new leave
-router.patch('/:id', requireAuth, updateLeave)
+router.patch('/:id', updateLeave)
 
 module.exports = router
