@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 //create express app
 const app = express()
 // app.options('*', cors());
-app.use(cors({origin: 'https://leaveease-frontend-dev.vercel.app', methods: ["GET", "POST", "DELETE"], credentials: true}))
+app.use(cors({origin: 'https://leaveease.vercel.app', methods: ["GET", "POST", "DELETE"], credentials: true}))
 app.use(express.json())
 app.use((req, res, next) => {
     console.log(req.path, req.method)
