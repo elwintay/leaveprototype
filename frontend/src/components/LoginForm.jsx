@@ -37,7 +37,7 @@ function LoginForm(props) {
       credentials: 'include',
       body: JSON.stringify(loginCredentials),
     };
-    fetch('https://leaveprototype-backend.vercel.app/api/user/login', requestOptions)
+    fetch('https://leaveease-server.vercel.app/api/user/login', requestOptions)
         .then(res => {if (res.status==200){
           waitForCookie('jwt')
           waitForCookie('username')
