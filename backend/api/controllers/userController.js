@@ -41,7 +41,7 @@ const signup_post = async (req, res, next) => {
         const user = await userModel.create({ email, username, password, team });
         const tokenInput = {userid: user.id.toString(), username: user.username}
         const token = authMiddleware.createToken(tokenInput);
-        res.cookie('jwt', token, { httpOnly: false, sameSite: 'None', secure: true, domain: "leaveease.vercel.app" });
+        res.cookie('jwt', token, { httpOnly: false, sameSite: 'None', secure: true, domain: ".vercel.app" });
         res.status(201).json({ user: tokenInput });
     }
     catch (err) {
@@ -59,7 +59,7 @@ const login_post = async (req, res) => {
         const tokenInput = {userid: user.id.toString()}
         const token = authMiddleware.createToken(tokenInput);
         // res.cookie('jwt', token, { httpOnly: true, maxAge: process.env.COOKIE_MAX_AGE, sameSite: 'None' });
-        res.cookie('jwt', token, { httpOnly: false, sameSite: 'None', secure: true, domain: "leaveease.vercel.app" });
+        res.cookie('jwt', token, { httpOnly: false, sameSite: 'None', secure: true, domain: ".vercel.app" });
         res.cookie('username', user.username, { sameSite: 'None' })
         res.status(200).json({ user: tokenInput });
     } catch (err) {
