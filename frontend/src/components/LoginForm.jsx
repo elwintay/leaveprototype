@@ -6,6 +6,25 @@ import { add } from './redux/userSlice';
 import { login } from './redux/loginSlice';
 import Cookies from 'js-cookie'
 
+// Function to wait for a specific cookie to appear
+function waitForCookie(cookieName, timeout = 5000) {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+
+    function check() {
+      if (Cookies.get(cookieName)) {
+        resolve();
+      } else if (Date.now() - start > timeout) {
+        reject(new Error('Timeout waiting for cookie'));
+      } else {
+        setTimeout(check, 100);  // Check every 100ms
+      }
+    }
+
+    check();
+  });
+}
+
 function LoginForm(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,6 +39,8 @@ function LoginForm(props) {
     };
     fetch('https://leaveprototype-backend.vercel.app/api/user/login', requestOptions)
         .then(res => {if (res.status==200){
+          waitForCookie('jwt')
+          waitForCookie('username')
           dispatch(add(Cookies.get('username')))
           dispatch(login())
           navigate("/apply")

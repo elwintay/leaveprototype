@@ -41,7 +41,7 @@ const signup_post = async (req, res, next) => {
         const user = await userModel.create({ email, username, password, team });
         const tokenInput = {userid: user.id.toString(), username: user.username}
         const token = authMiddleware.createToken(tokenInput);
-        res.cookie('jwt', token, { httpOnly: true, maxAge: process.env.COOKIE_MAX_AGE });
+        res.cookie('jwt', token, { httpOnly: true, maxAge: process.env.COOKIE_MAX_AGE, sameSite: 'None' });
         res.status(201).json({ user: tokenInput });
     }
     catch (err) {
@@ -56,9 +56,9 @@ const login_post = async (req, res) => {
 
     try {
         const user = await userModel.login(email, password);
-        const tokenInput = {userid: user.id.toString(), username: user.username}
+        const tokenInput = {userid: user.id.toString()}
         const token = authMiddleware.createToken(tokenInput);
-        res.cookie('jwt', token, { httpOnly: true, maxAge: process.env.COOKIE_MAX_AGE });
+        res.cookie('jwt', token, { httpOnly: true, maxAge: process.env.COOKIE_MAX_AGE, sameSite: 'None' });
         res.cookie('username', user.username)
         res.status(200).json({ user: tokenInput });
     } catch (err) {
