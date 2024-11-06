@@ -60,7 +60,7 @@ const login_post = async (req, res) => {
         const token = authMiddleware.createToken(tokenInput);
         // res.cookie('jwt', token, { httpOnly: true, maxAge: process.env.COOKIE_MAX_AGE, sameSite: 'None' });
         res.cookie('jwt', token, { httpOnly: false, sameSite: 'None', secure: true, domain: ".vercel.app" });
-        res.cookie('username', user.username, { httpOnly: false, sameSite: 'None', secure: true, domain: ".vercel.app" })
+        res.cookie('username', user.username)
         res.status(200).json({ user: tokenInput });
     } catch (err) {
         const errors = handleErrors(err);
